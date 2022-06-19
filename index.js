@@ -1,43 +1,70 @@
-/*We want to start the bot in async
-So we use a special function that does that for us.*/
-async function start() {
-	try {
-		await require('./djbsf_library/index').lib("../configs.json"); //Import library
+const projectBow = await import('./library/index.js');
+await projectBow.lib('./configs.json');
 
-		/*When requested, commands get output trough here*/
-		mail_man.on('view_slash', async (client) => {});
-
-		/*On any interaction this gets triggered*/
-		mail_man.on('INTERACTION_CREATE', async (client) => {
-			action.user_cache('127708549118689280', client);
-
-			action.receive_interaction({ content: 'test', type: 4 }, client);
-		});
-
-		mail_man.on('MESSAGE_CREATE', async (client) => {});
-
-		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
-		mail_man.once('READY', async (client) => {
-			setInterval(async () => {
-				action.presence_update(
-					{
-						since: action.tell_time(),
-						activities: [
-							{
-								name: `${action.tell_time('full')} || ${client.message.d.guilds.length} Servers || ${Math.floor(process.memoryUsage().heapUsed / 1024 / 1024)} MB ram`,
-								type: 0,
-							},
-						],
-						status: 'dnd',
-						afk: false,
-					},
-					client
-				);
-			}, 10000);
-		});
-	} catch (error) {
-		console.log(error);
-	}
+function log(incomingMessage) {
+	console.log(time.clock().eu, time.date().nice, incomingMessage.message.t)
 }
 
-start(); //Start async
+mailMan.on('INTERACTION_CREATE', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('GUILD_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_DELETE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_ROLE_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_ROLE_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_ROLE_DELETE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_MEMBER_ADD', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_MEMBER_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_MEMBER_REMOVE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_MEMBERS_CHUNK', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_BAN_ADD', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_BAN_REMOVE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_EMOJIS_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_STICKERS_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_INTEGRATIONS_UPDATE', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('INTEGRATION_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('INTEGRATION_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('INTEGRATION_DELETE', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('INVITE_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('INVITE_DELETE', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('CHANNEL_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('CHANNEL_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('CHANNEL_DELETE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('CHANNEL_PINS_UPDATE', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('GUILD_SCHEDULED_EVENT_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_SCHEDULED_EVENT_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_SCHEDULED_EVENT_DELETE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_SCHEDULED_EVENT_USER_ADD', async (incomingMessage) => log(incomingMessage));
+mailMan.on('GUILD_SCHEDULED_EVENT_USER_REMOVE', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('MESSAGE_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('MESSAGE_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('MESSAGE_DELETE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('MESSAGE_DELETE_BULK', async (incomingMessage) => log(incomingMessage));
+mailMan.on('MESSAGE_REACTION_ADD', async (incomingMessage) => log(incomingMessage));
+mailMan.on('MESSAGE_REACTION_REMOVE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('MESSAGE_REACTION_REMOVE_ALL', async (incomingMessage) => log(incomingMessage));
+mailMan.on('MESSAGE_REACTION_REMOVE_EMOJI', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('THREAD_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('THREAD_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('THREAD_DELETE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('THREAD_MEMBER_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('THREAD_MEMBERS_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('THREAD_LIST_SYNC', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('STAGE_INSTANCE_CREATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('STAGE_INSTANCE_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('STAGE_INSTANCE_DELETE', async (incomingMessage) => log(incomingMessage));
+
+mailMan.on('READY', async (incomingMessage) => log(incomingMessage));
+mailMan.on('RESUMED', async (incomingMessage) => log(incomingMessage));
+mailMan.on('WEBHOOKS_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('PRESENCE_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('VOICE_STATE_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('USER_UPDATE', async (incomingMessage) => log(incomingMessage));
+mailMan.on('TYPING_START', async (incomingMessage) => log(incomingMessage));
